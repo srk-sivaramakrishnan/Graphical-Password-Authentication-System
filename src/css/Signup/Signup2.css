@@ -1,0 +1,48 @@
+.signup2-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.dropdown-container {
+    margin-bottom: 20px;
+}
+
+.dropdown-container select {
+    margin-right: 10px;
+}
+
+.buttons-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons-container button {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-eye-container {
+    position: relative;
+    display: inline-block;
+}
+
+.input-eye-container input {
+    padding-right: 30px;
+}
+
+.input-eye-container .eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
