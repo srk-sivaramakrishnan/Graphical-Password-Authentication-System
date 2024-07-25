@@ -10,11 +10,14 @@ CREATE TABLE level1 (
 
 CREATE TABLE level2 (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    button1 VARCHAR(20),
-    button2 VARCHAR(20),
-    button3 VARCHAR(20),
-    button4 VARCHAR(20),
-    button5 VARCHAR(20),
-    button6 VARCHAR(20),
-    selected_colors TEXT
+    user_id INT NOT NULL,
+    button1 VARCHAR(20) NOT NULL,
+    button2 VARCHAR(20) NOT NULL,
+    button3 VARCHAR(20) NOT NULL,
+    button4 VARCHAR(20) NOT NULL,
+    button5 VARCHAR(20) NOT NULL,
+    button6 VARCHAR(20) NOT NULL,
+    selected_colors VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES level1(id) 
 );
+
