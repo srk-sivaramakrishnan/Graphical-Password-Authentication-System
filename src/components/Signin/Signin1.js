@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import '../../css/Signin/Signin1.css';
 
 const Signin1 = () => {
@@ -11,32 +10,44 @@ const Signin1 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const credentials = {
+            username,
+            password
+        };
+
         try {
-            const response = await axios.post('http://localhost:3001/level1/signin', { username, password });
-            const { id } = response.data;
-            navigate(`/signin2/${id}`); // Navigate to Signin2 with user ID
+            const response = await axios.post('http://localhost:3001/level1/signin', credentials);
+            const userId = response.data.userId; // Assuming the user ID is returned in the response
+            navigate(`/signin/level2/${userId}`);
         } catch (error) {
-            console.error('Error signing in:', error);
-            alert('Invalid username or password');
+            console.error('There was an error signing in!', error);
+            alert('Error signing in, please try again');
         }
     };
 
     return (
         <div className="signin1-container">
-            <h2>Signin</h2>
+            <h2>Sign In</h2>
             <form onSubmit={handleSubmit}>
-                <label>Username:</label>
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <div>
+                    <label>Username:</label>
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
                 <button type="submit">Sign In</button>
             </form>
         </div>

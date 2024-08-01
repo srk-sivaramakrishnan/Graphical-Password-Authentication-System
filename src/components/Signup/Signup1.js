@@ -7,7 +7,7 @@ const Signup1 = () => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,8 +20,8 @@ const Signup1 = () => {
 
         try {
             const response = await axios.post('http://localhost:3001/level1/signup', newUser);
-            const userId = response.data.userId; // Assuming the user ID is returned in the response
-            navigate(`/signup2/${userId}`); // Navigate to Signup2 with user ID
+            const userId = response.data.userId; // Ensure userId is returned from backend
+            navigate(`/signup/level2/${userId}`);
         } catch (error) {
             console.error('There was an error signing up!', error);
             alert('Error signing up, please try again');

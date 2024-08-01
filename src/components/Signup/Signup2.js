@@ -1,20 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import '../../css/Signup/Signup2.css';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const colorOptions = ['Red', 'Green', 'Blue', 'Yellow', 'Orange', 'Purple', 'Pink', 'Brown', 'Gray', 'Black'];
-
-const Signup2 = () => {
-    const [selectedColor, setSelectedColor] = useState('');
+const Signin2 = () => {
+    const { id } = useParams(); // Retrieve user ID from URL parameters
+    const navigate = useNavigate(); // Initialize useNavigate
+    const [selectedColor, setSelectedColor] = useState('#ffffff');
     const [colorButtons, setColorButtons] = useState(Array(6).fill('#ffffff'));
     const [colorNames, setColorNames] = useState([]);
     const [showInputText, setShowInputText] = useState(false);
     const [inputText, setInputText] = useState('');
     const [nextButtonIndex, setNextButtonIndex] = useState(0);
 
-    const handleColorSelection = (color) => {
-        setSelectedColor(color);
+    useEffect(() => {
+        if (!id || isNaN(id)) {
+            alert('User ID is missing or invalid');
+            return;
+        }
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3001/level2/data/${id}`);
+                const { button1, button2, button3, button4, button5, button6, selected_colors } = response.data;
+                setColorButtons([button1, button2, button3, button4, button5, button6]);
+                setColorNames(selected_colors.split(', '));
+                setInputText(selected_colors);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                alert('Error fetching data');
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    const handleColorSelection = (e) => {
+        setSelectedColor(e.target.value);
     };
 
     const handleButtonClick = () => {
@@ -44,19 +66,28 @@ const Signup2 = () => {
         setInputText(e.target.value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (!id || isNaN(id)) {
+            alert('User ID is missing or invalid');
+            return;
+        }
+
+        const buttons = colorButtons;
+        const selectedColors = colorNames.join(', ');
+
         try {
-            // Replace `userId` with the actual user ID if you have it
-            const userId = 5; // Example user ID, replace with dynamic value as needed
-            const response = await axios.post('http://localhost:3001/level2/signup', {
-                user_id: userId,
-                colorButtons,
-                colorNames
+            await axios.post('http://localhost:3001/level2/signup', {
+                user_id: id,
+                buttons,
+                selectedColors
             });
-            alert(response.data);
+            alert('Data updated successfully');
+            navigate(`/signup/level3/${id}`); // Navigate to Signup3 after submission
         } catch (error) {
-            console.error('There was an error submitting the data!', error);
-            alert('Error submitting data, please try again');
+            console.error('Error updating data:', error);
+            alert('There was an error updating the data!');
         }
     };
 
@@ -68,16 +99,15 @@ const Signup2 = () => {
     };
 
     return (
-        <div className="signup2-container">
-            <h2>Level - 02</h2>
-            <div className="dropdown-container">
+        <div className="signin2-container">
+            <h2>Signup Level - 02</h2>
+            <div className="color-picker-container">
                 <label>Select Color:</label>
-                <select onChange={(e) => handleColorSelection(e.target.value)} value={selectedColor}>
-                    <option value="">--Select Color--</option>
-                    {colorOptions.map(color => (
-                        <option key={color} value={color}>{color}</option>
-                    ))}
-                </select>
+                <input 
+                    type="color" 
+                    value={selectedColor} 
+                    onChange={handleColorSelection}
+                />
                 <button onClick={handleButtonClick}>Apply Color</button>
             </div>
             <div className="buttons-container">
@@ -110,10 +140,10 @@ const Signup2 = () => {
             </div>
             <div className="button-actions">
                 <button onClick={handleRefresh}>Refresh</button>
-                <button onClick={handleSubmit}>Save</button>
+                <button onClick={handleSubmit}>Submit</button>
             </div>
         </div>
     );
 };
 
-export default Signup2;
+export default Signin2;
