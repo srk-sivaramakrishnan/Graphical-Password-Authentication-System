@@ -1,0 +1,47 @@
+.signin3-container {
+    padding: 20px;
+}
+
+.header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.image-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.image-grid-item {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.drop-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.drop-grid-item {
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.drop-grid-item img {
+    max-width: 100%;
+    max-height: 100%;
+}

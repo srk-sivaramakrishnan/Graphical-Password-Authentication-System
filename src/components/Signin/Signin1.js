@@ -18,7 +18,7 @@ const Signin1 = () => {
 
         try {
             const response = await axios.post('http://localhost:3001/level1/signin', credentials);
-            const userId = response.data.userId; // Assuming the user ID is returned in the response
+            const { userId } = response.data; // Extract userId from the response data
             navigate(`/signin/level2/${userId}`);
         } catch (error) {
             console.error('There was an error signing in!', error);

@@ -3,11 +3,27 @@ import axios from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Define the fixed set of 12 colors and their names
+const colors = [
+    { name: 'Red', code: '#FF0000' },
+    { name: 'Green', code: '#00FF00' },
+    { name: 'Blue', code: '#0000FF' },
+    { name: 'Yellow', code: '#FFFF00' },
+    { name: 'Orange', code: '#FFA500' },
+    { name: 'Purple', code: '#800080' },
+    { name: 'Cyan', code: '#00FFFF' },
+    { name: 'Magenta', code: '#FF00FF' },
+    { name: 'Lime', code: '#00FF00' },
+    { name: 'Teal', code: '#008080' },
+    { name: 'Pink', code: '#FFC0CB' },
+    { name: 'Brown', code: '#A52A2A' }
+];
+
 const Signin2 = () => {
     const { id } = useParams(); // Retrieve user ID from URL parameters
     const navigate = useNavigate(); // Initialize useNavigate
-    const [selectedColor, setSelectedColor] = useState('#ffffff');
-    const [colorButtons, setColorButtons] = useState(Array(6).fill('#ffffff'));
+    const [selectedColor, setSelectedColor] = useState(colors[0].code); // Initialize with the first color
+    const [colorButtons, setColorButtons] = useState(Array(6).fill(colors[0].code));
     const [colorNames, setColorNames] = useState([]);
     const [showInputText, setShowInputText] = useState(false);
     const [inputText, setInputText] = useState('');
@@ -36,7 +52,8 @@ const Signin2 = () => {
     }, [id]);
 
     const handleColorSelection = (e) => {
-        setSelectedColor(e.target.value);
+        const selected = colors.find(color => color.code === e.target.value);
+        setSelectedColor(selected.code);
     };
 
     const handleButtonClick = () => {
@@ -48,14 +65,15 @@ const Signin2 = () => {
         }
     };
 
-    const handleButtonSelect = (color) => {
-        if (!colorNames.includes(color)) {
+    const handleButtonSelect = (colorCode) => {
+        const colorName = colors.find(color => color.code === colorCode)?.name;
+        if (colorName && !colorNames.includes(colorName)) {
             const updatedColorNames = [...colorNames];
             if (updatedColorNames.length < 3) {
-                updatedColorNames.push(color);
+                updatedColorNames.push(colorName);
             } else {
                 updatedColorNames.shift();
-                updatedColorNames.push(color);
+                updatedColorNames.push(colorName);
             }
             setColorNames(updatedColorNames);
             setInputText(updatedColorNames.join(', '));
@@ -92,7 +110,7 @@ const Signin2 = () => {
     };
 
     const handleRefresh = () => {
-        setColorButtons(Array(6).fill('#ffffff'));
+        setColorButtons(Array(6).fill(colors[0].code));
         setColorNames([]);
         setInputText('');
         setNextButtonIndex(0);
@@ -103,11 +121,13 @@ const Signin2 = () => {
             <h2>Signup Level - 02</h2>
             <div className="color-picker-container">
                 <label>Select Color:</label>
-                <input 
-                    type="color" 
-                    value={selectedColor} 
-                    onChange={handleColorSelection}
-                />
+                <select value={selectedColor} onChange={handleColorSelection}>
+                    {colors.map(color => (
+                        <option key={color.code} value={color.code} style={{ backgroundColor: color.code }}>
+                            {color.name}
+                        </option>
+                    ))}
+                </select>
                 <button onClick={handleButtonClick}>Apply Color</button>
             </div>
             <div className="buttons-container">

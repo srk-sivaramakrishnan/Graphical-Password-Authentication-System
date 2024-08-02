@@ -5,6 +5,8 @@ CREATE TABLE level1 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL
 );
 
@@ -21,33 +23,15 @@ CREATE TABLE level2 (
     FOREIGN KEY (user_id) REFERENCES level1(id) 
 );
 
--- Create uploads table
-CREATE TABLE uploads (
+CREATE TABLE image_grids (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
+    image_grid JSON NOT NULL,
+    drop_grid JSON NOT NULL,
     FOREIGN KEY (user_id) REFERENCES level1(id)
 );
 
--- Create image_grids table
-CREATE TABLE image_grids (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    upload_id INT NOT NULL,
-    grid_index INT NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
-    FOREIGN KEY (upload_id) REFERENCES uploads(id)
-);
-
--- Create selected_grids table
-CREATE TABLE selected_grids (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    upload_id INT NOT NULL,
-    grid_index INT NOT NULL,
-    image_url VARCHAR(255) NOT NULL,
-    FOREIGN KEY (upload_id) REFERENCES uploads(id)
-);
-
-
 drop table level1;
+drop table image_grids;
 select * from level2;
+select * from image_grids;

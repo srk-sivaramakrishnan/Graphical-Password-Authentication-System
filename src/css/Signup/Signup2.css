@@ -1,48 +1,136 @@
-.signup2-container {
+.signin2-container {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
-    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.dropdown-container {
+.signin2-container h2 {
+    text-align: center;
     margin-bottom: 20px;
 }
 
-.dropdown-container select {
+.color-picker-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.color-picker-container label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.color-picker-container select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     margin-right: 10px;
 }
 
+.color-picker-container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background-color: #fff; /* Set button background color to white */
+    color: #007bff; /* Set text color to match the border color */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.color-picker-container button:hover {
+    background-color: #007bff; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
 .buttons-container {
-    margin-bottom: 20px;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .buttons-container button {
     width: 50px;
     height: 50px;
-    margin: 5px;
     border: none;
-    cursor: pointer;
     border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.buttons-container button:hover {
+    transform: scale(1.1);
 }
 
 .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
 }
 
+.input-container label {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
 .input-eye-container {
-    position: relative;
-    display: inline-block;
+    display: flex;
+    align-items: center;
 }
 
 .input-eye-container input {
-    padding-right: 30px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 200px;
+    text-align: center;
 }
 
-.input-eye-container .eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+.eye-icon {
     cursor: pointer;
+    font-size: 20px;
+    color: #007bff;
+}
+
+.button-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 1px solid #007bff; /* Border color */
+    border-radius: 4px;
+    background-color: #fff; /* Button background color */
+    color: #007bff; /* Text color */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.button-actions button:hover {
+    background-color: #007bff; /* Background color on hover */
+    color: #fff; /* Text color on hover */
+}
+
+.button-actions button:first-of-type {
+    background-color: #fff; /* Background color for the first button */
+    color: #ffc107; /* Text color for the first button */
+    border: 1px solid #ffc107; /* Border color for the first button */
+}
+
+.button-actions button:first-of-type:hover {
+    background-color: #ffc107; /* Background color on hover for the first button */
+    color: #fff; /* Text color on hover for the first button */
 }

@@ -1,123 +1,176 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useDropzone } from 'react-dropzone';
-import Cropper from 'cropperjs';
-import 'cropperjs/dist/cropper.min.css';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../css/Signup/Signup3.css';
+import axios from 'axios'; // For making API requests
+
+const imageCategories = {
+    Cat: '/images/cat.jpg',
+    Dog: '/images/dog.jpg',
+    Car: '/images/car.jpg',
+    Flower: '/images/flower.jpg',
+    Chocolate: '/images/chocolate.jpg',
+};
 
 const Signup3 = () => {
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [image, setImage] = useState(null);
     const [croppedImages, setCroppedImages] = useState([]);
-    const cropperRef = useRef(null);
-    const cropperInstance = useRef(null);
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: 'image/*',
-        onDrop: (acceptedFiles) => {
-            const file = acceptedFiles[0];
-            const url = URL.createObjectURL(file);
-            setImage(url);
-        },
-    });
+    const [dropPosition, setDropPosition] = useState(Array(9).fill(null));
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const imageRef = useRef(null);
+    const gridRef = useRef(null);
 
     useEffect(() => {
-        if (image && cropperRef.current) {
-            cropperInstance.current = new Cropper(cropperRef.current, {
-                aspectRatio: 1,
-                viewMode: 1,
-                autoCropArea: 1,
-                cropBoxResizable: false,
-            });
+        if (selectedCategory) {
+            setImage(imageCategories[selectedCategory]);
+        } else {
+            setImage(null);
         }
-        return () => {
-            if (cropperInstance.current) {
-                cropperInstance.current.destroy();
-            }
-        };
-    }, [image]);
+    }, [selectedCategory]);
 
-    const handleCrop = () => {
-        if (cropperInstance.current) {
-            const cropper = cropperInstance.current;
-            const canvas = cropper.getCroppedCanvas();
+    useEffect(() => {
+        if (image && imageRef.current) {
+            const img = imageRef.current;
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const numRows = 3;
+            const numCols = 3;
+            const cropWidth = img.naturalWidth / numCols;
+            const cropHeight = img.naturalHeight / numRows;
+
+            canvas.width = cropWidth;
+            canvas.height = cropHeight;
+
             const croppedImagesArray = [];
 
-            // Calculate crop width and height
-            const cropWidth = canvas.width / 3;
-            const cropHeight = canvas.height / 3;
-
-            // Create a 3x3 grid of cropped images
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
-                    const croppedCanvas = document.createElement('canvas');
-                    const ctx = croppedCanvas.getContext('2d');
-                    croppedCanvas.width = cropWidth;
-                    croppedCanvas.height = cropHeight;
-
+            for (let row = 0; row < numRows; row++) {
+                for (let col = 0; col < numCols; col++) {
+                    ctx.clearRect(0, 0, cropWidth, cropHeight);
                     ctx.drawImage(
-                        canvas,
-                        j * cropWidth, i * cropHeight, cropWidth, cropHeight,
+                        img,
+                        col * cropWidth, row * cropHeight, cropWidth, cropHeight,
                         0, 0, cropWidth, cropHeight
                     );
-
-                    const croppedImage = croppedCanvas.toDataURL('image/png');
-                    croppedImagesArray.push(croppedImage);
+                    croppedImagesArray.push(canvas.toDataURL('image/png'));
                 }
             }
 
             setCroppedImages(croppedImagesArray);
         }
+    }, [image]);
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
+    };
+
+    const handleDragStart = (event, src) => {
+        event.dataTransfer.setData('text/plain', src);
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const cellIndex = event.target.getAttribute('data-index');
+        const draggedImage = event.dataTransfer.getData('text/plain');
+        if (draggedImage && cellIndex !== null) {
+            const newGrid = [...dropPosition];
+            newGrid[cellIndex] = draggedImage;
+            setDropPosition(newGrid);
+        }
+    };
+
+    const handleSignup = async () => {
+        setLoading(true);
+        try {
+            const userId = 1; // Replace with actual user ID logic
+
+            await axios.post('http://localhost:3001/api/signup3', {
+                user_id: userId,
+                imageGrid: croppedImages,
+                dropGrid: dropPosition
+            });
+            setMessage('Signup successful');
+            alert('Signup successful');
+        } catch (error) {
+            setMessage('Error during signup');
+            alert('Error during signup');
+            console.error('Error during signup', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleRefresh = () => {
+        setSelectedCategory('');
+        setImage(null);
+        setCroppedImages([]);
+        setDropPosition(Array(9).fill(null));
+        setMessage('');
     };
 
     return (
         <div className="signup3-container">
             <h2>Signup Level - 03</h2>
-            <div className="main-content">
-                <div className="image-upload-section">
-                    <div className="image-upload-container" {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <div className="upload-icon-container">
-                            <div className="upload-icon">
-                                <p>Drag 'n' drop an image here, or click to select one</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="dropdown-container">
-                        <label>Select Image:</label>
-                        <select onChange={(e) => setImage(`public/images/${e.target.value}.jpg`)}>
-                            <option value="">--Select Image--</option>
-                            <option value="cat">Cat</option>
-                            <option value="dog">Dog</option>
-                            <option value="chocolate">Chocolate</option>
-                            <option value="car">Car</option>
-                            <option value="flower">Flower</option>
-                        </select>
-                    </div>
-                </div>
-                {image && (
-                    <div className="image-display-container">
-                        <img
-                            ref={cropperRef}
-                            src={image}
-                            alt="Selected"
-                            className="uploaded-image"
-                        />
-                    </div>
-                )}
+
+            <div className="dropdown-section">
+                <label htmlFor="category">Select Image Category:</label>
+                <select
+                    id="category"
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                >
+                    <option value="">--Select--</option>
+                    <option value="Cat">Cat</option>
+                    <option value="Dog">Dog</option>
+                    <option value="Car">Car</option>
+                    <option value="Flower">Flower</option>
+                    <option value="Chocolate">Chocolate</option>
+                </select>
             </div>
-            <div className="button-actions">
-                <button onClick={handleCrop}>Crop</button>
-            </div>
-            {croppedImages.length > 0 && (
-                <div className="cropped-images-container">
+
+            <div className="grid-container">
+                <div className="image-grid-container">
+                    <img src={image} alt="Selected" ref={imageRef} style={{ display: 'none' }} />
                     {croppedImages.map((src, index) => (
-                        <img
+                        <div
                             key={index}
-                            src={src}
-                            alt={`Cropped ${index}`}
-                            className="cropped-image"
-                        />
+                            className="image-grid-cell"
+                            draggable
+                            onDragStart={(e) => handleDragStart(e, src)}
+                        >
+                            <img src={src} alt={`Cropped ${index}`} />
+                        </div>
                     ))}
                 </div>
-            )}
+
+                <div
+                    className="drop-grid-container"
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    ref={gridRef}
+                >
+                    {dropPosition.map((imageSrc, index) => (
+                        <div
+                            key={index}
+                            className="drop-grid-cell"
+                            data-index={index}
+                        >
+                            {imageSrc && <img src={imageSrc} alt={`Dropped ${index}`} />}
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="button-actions">
+                <button onClick={handleRefresh}>Refresh</button>
+                <button onClick={handleSignup} disabled={loading}>
+                    {loading ? 'Signing up...' : 'Signup'}
+                </button>
+            </div>
+            {message && <p>{message}</p>}
         </div>
     );
 };

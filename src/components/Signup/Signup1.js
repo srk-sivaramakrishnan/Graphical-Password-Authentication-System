@@ -6,6 +6,8 @@ import '../../css/Signup/Signup1.css';
 const Signup1 = () => {
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -15,12 +17,14 @@ const Signup1 = () => {
         const newUser = {
             name,
             username,
+            email,
+            phone,
             password
         };
 
         try {
             const response = await axios.post('http://localhost:3001/level1/signup', newUser);
-            const userId = response.data.userId; // Ensure userId is returned from backend
+            const userId = response.data.userId;
             navigate(`/signup/level2/${userId}`);
         } catch (error) {
             console.error('There was an error signing up!', error);
@@ -47,6 +51,24 @@ const Signup1 = () => {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>Phone Number:</label>
+                    <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                         required
                     />
                 </div>
