@@ -183,6 +183,7 @@ app.post('/level2/verify', (req, res) => {
 // -------------------------------------------- LEVEL - 03 -------------------------------------------------------
 
 // Level-03/Signup
+
 app.post('/api/signup3', (req, res) => {
     const { user_id, imageGrid, dropGrid } = req.body;
 
@@ -203,19 +204,13 @@ app.post('/api/signup3', (req, res) => {
 // Level-03/Signin
 app.post('/level3/signin', (req, res) => {
     const { user_id } = req.body;
-
     if (!user_id) {
         return res.status(400).send('User ID is required');
     }
-
-    const selectImageGridQuery = `
-      SELECT image_grid FROM image_grids 
-      WHERE user_id = ?
-    `;
-
-    connection.query(selectImageGridQuery, [user_id], (err, results) => {
+    const query = 'SELECT image_grid FROM image_grids WHERE user_id = ?';
+    connection.query(query, [user_id], (err, results) => {
         if (err) {
-            console.error('Error fetching image grid data:', err);
+            console.error('Error fetching image grid:', err);
             return res.status(500).send('Internal Server Error');
         }
         if (results.length === 0) {
@@ -228,17 +223,11 @@ app.post('/level3/signin', (req, res) => {
 // Verifying Image
 app.post('/level3/getDropGrid', (req, res) => {
     const { user_id } = req.body;
-
     if (!user_id) {
         return res.status(400).send('User ID is required');
     }
-
-    const selectDropGridQuery = `
-        SELECT drop_grid FROM image_grids
-        WHERE user_id = ?
-    `;
-
-    connection.query(selectDropGridQuery, [user_id], (err, results) => {
+    const query = 'SELECT drop_grid FROM image_grids WHERE user_id = ?';
+    connection.query(query, [user_id], (err, results) => {
         if (err) {
             console.error('Error fetching drop grid data:', err);
             return res.status(500).send('Internal Server Error');
@@ -246,10 +235,9 @@ app.post('/level3/getDropGrid', (req, res) => {
         if (results.length === 0) {
             return res.status(404).send('Drop grid not found');
         }
-        res.status(200).json(results[0].drop_grid); // Send JSON data
+        res.status(200).json(JSON.parse(results[0].drop_grid)); // Parse the JSON string from database
     });
 });
-
 // -------------------------------------------- DISPLAYING USERNAME -------------------------------------------------------
 
 app.post('/level1/getUserName', (req, res) => {

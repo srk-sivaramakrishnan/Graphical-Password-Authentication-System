@@ -1,28 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .signin2-container {
-    text-align: center;
+  display: flex;
+  height: 100vh;
 }
 
-.buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+.signin2-container .left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #a020f0; /* Background color for the left side */
+  padding: 20px;
 }
 
-.buttons-container button {
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    outline: none;
+.signin2-container .skyhook-text {
+  position: absolute;
+  top: 20px; /* Adjust the spacing as needed */
+  left: 20px; /* Adjust the spacing as needed */
+  font-size: 32px; /* Adjust the font size as needed */
+  font-weight: 600; /* Adjust the font weight as needed */
+  color: #fff; /* Adjust the color as needed */
 }
 
-.input-container {
-    margin-bottom: 20px;
+.signin2-container .vector-img {
+  width: 80%; /* Adjust the width as needed */
+  height: auto;
+  margin-top: 50px; /* Adjust the spacing as needed */
 }
 
-.button-actions button {
-    margin: 0 10px;
+.signin2-container .right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff; /* Background color for the right side */
+  margin-bottom: 80px;
+}
+
+.signin2-container .right-section h1 {
+  margin-bottom: 10px;
+  font-size: 32px; /* Font size for greeting */
+  text-align: center;
+  font-weight: 600; /* Font weight for greeting */
+}
+
+.signin2-container .username {
+  color: #a020f0;
+}
+
+.signin2-container .level-heading {
+  margin-bottom: 20px; /* Space between level heading and greeting */
+  font-size: 24px; /* Font size for level heading */
+  text-align: center;
+  font-weight: 500; /* Font weight for level heading */
+}
+
+.signin2-container .buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Increase the spacing between buttons */
+  margin-bottom: 20px;
+  margin-left: 10px;
+  /* Optionally adjust width to fit container */
+}
+.signin2-container .buttons-container button {
+  border: none;
+  border-radius: 50%; /* Circular shape */
+  padding: 20px; /* Increase padding to make buttons larger and adjust as needed */
+  cursor: pointer;
+  color: #fff;
+  display: flex; /* Center text within the button */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  background-color: #a020f0; /* Default background color for buttons */
+  width: 70px; /* Set width to ensure circular shape */
+  height: 70px; /* Set height to ensure circular shape */
+  line-height: 1; /* Ensure text is vertically centered */
+}
+
+
+.signin2-container .buttons-container button:hover {
+  background-color: #b24ff0; /* Button hover color */
+}
+
+.signin2-container .input-container {
+  margin-bottom: 10px; /* Reduce the margin to decrease gap */
+  width: 100%; /* Make the input container full width */
+  margin-left: 350px;
+}
+
+.signin2-container .input-container label {
+  display: block;
+  font-weight: 500;
+}
+
+.signin2-container .input-with-icon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 50%; 
+}
+
+.signin2-container .input-with-icon input {
+  margin-top: 5px;
+  padding: 12px; /* Increase padding for larger input box */
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: calc(100% - 40px); /* Adjust width to account for icon */
+}
+
+.signin2-container .eye-icon {
+  position: absolute;
+  top: 30%;
+  right: 30px; /* Adjust the positioning of the icon */
+  cursor: pointer;
+  font-size: 18px;
+  color: #a020f0;
+}
+
+.signin2-container .button-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.signin2-container .button-actions button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #a020f0;
+  cursor: pointer;
+}
+
+.signin2-container .button-actions button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+.signin2-container .forgot-password {
+  margin-top: 10px;
+}
+
+.signin2-container .forgot-password a {
+  color: #a020f0;
+  text-decoration: none;
+}
+
+.signin2-container .forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.signin2-container .footer {
+  margin-top: 120px;
+  font-size: 14px;
+  color: #888;
 }

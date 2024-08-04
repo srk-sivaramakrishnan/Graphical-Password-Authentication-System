@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import '../../css/Signin/Signin3.css'; // Adjust the path as needed
 
 const Signin3 = () => {
-    const { id } = useParams(); // Retrieve user ID from URL parameters
+    const { id } = useParams();
     const [username, setUsername] = useState('');
     const [imageGrid, setImageGrid] = useState([]);
-    const [dropGrid, setDropGrid] = useState(Array(9).fill(null)); // 3x3 grid
+    const [dropGrid, setDropGrid] = useState(Array(9).fill(null)); // Initialize with 9 null values
     const [storedDropGrid, setStoredDropGrid] = useState([]);
     const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ const Signin3 = () => {
             try {
                 // Fetch username
                 const userResponse = await axios.post('http://localhost:3001/level1/getUserName', { user_id: id });
-                setUsername(userResponse.data); // Ensure data is a string
+                setUsername(userResponse.data);
 
                 // Fetch image grid
                 const imageGridResponse = await axios.post('http://localhost:3001/level3/signin', { user_id: id });
@@ -29,7 +29,7 @@ const Signin3 = () => {
 
                 // Fetch drop grid from database
                 const dropGridResponse = await axios.post('http://localhost:3001/level3/getDropGrid', { user_id: id });
-                setStoredDropGrid(dropGridResponse.data); // Directly set JSON data
+                setStoredDropGrid(dropGridResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -57,47 +57,61 @@ const Signin3 = () => {
     };
 
     const handleVerify = async () => {
-        // Compare dropGrid with storedDropGrid
         const isMatch = JSON.stringify(dropGrid) === JSON.stringify(storedDropGrid);
 
         if (isMatch) {
-            alert('The drop grid matches the stored grid!');
-            navigate('/nextPage'); // Redirect or handle as needed
+            alert('Login Successfully');
+            navigate('/nextPage');
         } else {
-            alert('The drop grid does not match the stored grid. Please try again.');
+            alert('Incorrect password, please try again.');
         }
     };
 
     return (
         <div className="signin3-container">
-            <div className="header">
-                <h2>Hello, {username}</h2>
+            <div className="left-section">
+                <div className="skyhook-text">Skyhook!</div>
+                <img src="/images/Signin3.png" alt="Skyhook promotional graphic" className="vector-img" />
             </div>
-            <div className="image-grid-container">
-                {imageGrid && imageGrid.map((image, index) => (
-                    <img
-                        key={index}
-                        src={image} // Assuming image grid contains URLs or paths to images
-                        alt="" // Empty alt attribute as image context is clear
-                        className="image-grid-item"
-                        draggable
-                        onDragStart={(e) => handleDragStart(e, image)}
-                    />
-                ))}
-            </div>
-            <div className="drop-grid-container">
-                {dropGrid.map((image, index) => (
-                    <div
-                        key={index}
-                        className="drop-grid-item"
-                        onDrop={(e) => handleDrop(e, index)}
-                        onDragOver={handleDragOver}
-                    >
-                        {image && <img src={image} alt="" />} {/* Empty alt attribute as image context is clear */}
+            <div className="right-section">
+                <div className="header">
+                    <h1>Level-03</h1>
+                    <h1>Hello, <span className="username">{username}</span></h1>
+                </div>
+                <div className="right-section-content">
+                    <div className="image-grid-container">
+                        {imageGrid && imageGrid.map((image, index) => (
+                            <img
+                                key={index}
+                                src={image}
+                                alt={`Draggable item ${index + 1}`}
+                                className="image-grid-item"
+                                draggable
+                                onDragStart={(e) => handleDragStart(e, image)}
+                            />
+                        ))}
                     </div>
-                ))}
+                    <div className="drop-grid-container">
+                        {dropGrid.map((image, index) => (
+                            <div
+                                key={index}
+                                className="drop-grid-item"
+                                onDrop={(e) => handleDrop(e, index)}
+                                onDragOver={handleDragOver}
+                            >
+                                {image && <img src={image} alt={`Dropped item ${index + 1}`} />}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <button onClick={handleVerify}>Signin</button>
+                <div className="forgot-password">
+                    <a href="/forgot-password">Forgotten password?</a>
+                </div>
+                <footer className="footer">
+                    <p>&copy; 2024 SkyHook. All rights reserved.</p>
+                </footer>
             </div>
-            <button onClick={handleVerify}>Verify</button>
         </div>
     );
 };

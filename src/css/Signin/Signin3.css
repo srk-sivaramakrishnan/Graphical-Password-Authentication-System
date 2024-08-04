@@ -1,47 +1,152 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .signin3-container {
-    padding: 20px;
+  display: flex;
+  height: 100vh;
+  flex-direction: row; /* Side-by-side layout */
 }
 
-.header {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.signin3-container .left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #a020f0; /* Background color for the left side */
+  padding: 20px;
+  color: #fff; /* Text color for the left side */
 }
 
-.image-grid-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 20px;
+.signin3-container .skyhook-text {
+  font-size: 32px; /* Font size for "Skyhook!" */
+  font-weight: 600; /* Font weight for "Skyhook!" */
+  margin-bottom: 20px; /* Space below "Skyhook!" */
 }
 
-.image-grid-item {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    cursor: pointer;
+.signin3-container .vector-img {
+  width: 80%; /* Adjust the width as needed */
+  height: auto;
 }
 
-.drop-grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 100px);
-    grid-template-rows: repeat(3, 100px);
-    gap: 10px;
-    margin-top: 20px;
+.signin3-container .right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #ffffff; /* Background color for the right side */
+  margin-bottom: 150px;
 }
 
-.drop-grid-item {
-    width: 100px;
-    height: 100px;
-    background-color: #f0f0f0;
-    border: 2px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+.signin3-container .header {
+  text-align: center;
+  margin-bottom: 20px; /* Space between header and content */
 }
 
-.drop-grid-item img {
-    max-width: 100%;
-    max-height: 100%;
+.signin3-container .header h2 {
+  font-size: 24px; 
+}
+
+.signin3-container .username {
+  color: #a020f0;
+}
+
+.signin3-container .right-section-content {
+  display: flex; /* Flex container for side-by-side layout */
+  gap: 20px; /* Space between image grid and drop grid */
+}
+
+.signin3-container .image-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 100px); /* 3 columns */
+  gap: 5px; /* Space between images */
+  width: 300px; /* Fixed width for image grid */
+}
+
+.signin3-container .image-grid-item {
+  width: 100%; /* Fixed width for images */
+  height: 100px; /* Fixed height for images */
+  object-fit: cover; /* Ensure images cover the area */
+  border-radius: 5px;
+  cursor: grab;
+}
+
+.signin3-container .drop-grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 100px); /* 3 columns */
+  gap: 5px; /* Space between grid items */
+  border: none; /* Remove border from container */
+  background-color: #ffffff; /* Background color for drop grid */
+  padding-left: 5px;
+}
+
+.signin3-container .drop-grid-item {
+  width: 100px; /* Fixed width for drop grid items */
+  height: 100px; /* Fixed height for drop grid items */
+  border-radius: 5px;
+  background-color: #f9f9f9; /* Light background color for drop areas */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd; /* Light border to distinguish drop areas */
+  overflow: hidden; /* Hide any overflow from the images */
+}
+
+.signin3-container .drop-grid-item img {
+  width: 100%; /* Ensure image takes full width */
+  height: 100%; /* Ensure image takes full height */
+  object-fit: cover; /* Cover the container while preserving aspect ratio */
+  display: block; /* Remove extra space below the image */
+}
+
+.signin3-container button {
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #a020f0; /* Button background color */
+  color: #fff; /* Button text color */
+  transition: background-color 0.3s;
+  font-weight: 500;
+  position: relative; /* Allows adjustment with left and bottom properties */
+  bottom: -30px; /* Adjust this value to move the button down */
+}
+
+.signin3-container button:hover {
+  background-color: #b24ff0; /* Button hover color */
+}
+
+/* Add these styles to your existing Signin3.css file */
+
+.signin3-container .forgot-password {
+  text-align: center; /* Center the link below the button */
+  margin-top: 30px; /* Space between the button and the link */
+}
+
+.signin3-container .forgot-password a {
+  color: #a020f0; /* Link color */
+  font-size: 14px; /* Font size for the link */
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.signin3-container .forgot-password a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.signin3-container .footer {
+  margin-top: auto; /* Pushes the footer to the bottom of the right section */
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.signin3-container .footer p {
+  margin-top: 100px;
+  font-size: 14px;
+  color: #333; /* Text color for footer */
 }

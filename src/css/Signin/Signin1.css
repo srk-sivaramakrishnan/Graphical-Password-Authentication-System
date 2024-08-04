@@ -1,59 +1,148 @@
-/* Signin1.css */
-.signin-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-  }
-  
-  .signin-container h2 {
-    margin-bottom: 20px;
-  }
-  
-  .signin-container form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-  }
-  
-  .signin-container div {
-    margin-bottom: 15px;
-  }
-  
-  .signin-container label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .signin-container input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .signin-container button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .signin-container button:hover {
-    background-color: #0056b3;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-  .password-container {
-    position: relative;
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.password-container .eye-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
+.signin1-container {
+  display: flex;
+  height: 100vh;
+}
+
+.signin1-container .left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #a020f0; /* Background color for the left side */
+  padding: 20px;
+}
+
+.signin1-container .skyhook-text {
+  position: absolute;
+  top: 20px; /* Adjust the spacing as needed */
+  left: 20px; /* Adjust the spacing as needed */
+  font-size: 32px; /* Adjust the font size as needed */
+  font-weight: 600; /* Adjust the font weight as needed */
+  color: #fff; /* Adjust the color as needed */
+}
+
+.signin1-container .vector-img {
+  width: 80%; /* Adjust the width as needed */
+  height: auto;
+  margin-top: 50px; /* Adjust the spacing as needed */
+}
+
+.signin1-container .right-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff; /* Background color for the right side */
+  margin-top: 200px; /* Move the right section up by 200px or adjust as needed */
+}
+
+.signin1-container .right-section h1 {
+  margin-bottom: 10px;
+  font-size: 32px; /* Font size for Level-01 heading */
+  text-align: center;
+  font-weight: 600; /* Font weight for Level-01 heading */
+}
+
+.signin1-container .right-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600; /* Adjust the font weight as needed */
+}
+
+.signin1-container .right-section form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.signin1-container .right-section label {
+  margin-bottom: 5px;
+  font-weight: 500; /* Adjust the font weight as needed */
+  display: block; /* Ensure label takes full width */
+}
+
+.signin1-container .right-section input {
+  margin-bottom: 15px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%; /* Ensure input takes full width */
+  padding-right: 40px; /* Add space for the eye icon */
+}
+
+.signin1-container .right-section button.signin1-button {
+  margin-left: 120px;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #a020f0; 
+  color: #fff; 
+  transition: background-color 0.3s;
+  font-weight: 500;
+  width: 200px; 
+  max-width: 100%; 
+}
+
+.signin1-container .right-section button.signin1-button:hover {
+  background-color: #b24ff0; /* Button hover color */
+}
+
+.signin1-container .forgot-password1 {
+  margin-top: 30px;
+  margin-left: 50px;
+}
+
+.signin1-container .forgot-password1 a {
+  color: #a020f0; /* Color for the forgot password link */
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.signin1-container .forgot-password1 a:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.signin1-container .footer {
+  margin-top: auto; /* Pushes the footer to the bottom of the right section */
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.signin1-container .footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #333; /* Text color for footer */
+}
+
+.signin1-container .password-container {
+  position: relative;
+  width: 100%;
+}
+
+.signin1-container .password-icon {
+  position: absolute;
+  left: 100%;
+  top: 60%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 15px;
+  color: #a020f0; /* Icon color */
 }

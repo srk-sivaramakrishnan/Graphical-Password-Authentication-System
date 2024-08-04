@@ -15,9 +15,18 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <h1>Welcome to the Graphical Password Authentication System</h1>
-      <button onClick={handleSignup}>Signup</button>
-      <button onClick={handleSignin}>Signin</button>
+      <div className="left-section">
+        <div className="skyhook-text">SkyHook</div>
+        <img src="/images/Home.png" alt="Vector" className="vector-img" />
+      </div>
+      <div className="right-section">
+        <h1>Welcome to the Graphical Password Authentication System</h1>
+        <button onClick={handleSignup}>Signup</button>
+        <button onClick={handleSignin}>Signin</button>
+        <footer className="footer">
+          <p>© 2024 All rights reserved to SkyHook</p>
+        </footer>
+      </div>
     </div>
   );
 };
