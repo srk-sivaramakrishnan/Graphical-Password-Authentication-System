@@ -7,8 +7,8 @@ const app = express();
 const port = 3001;
 
 app.use(cors());
-app.use(bodyParser.json({ limit: '10mb' })); // Adjust the limit as needed
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true })); // Adjust the limit as needed
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Adjust the limit as needed
 
 
 // -------------------------------------------- MYSQL DATABASE CONNECTION -------------------------------------------------------
@@ -183,61 +183,79 @@ app.post('/level2/verify', (req, res) => {
 // -------------------------------------------- LEVEL - 03 -------------------------------------------------------
 
 // Level-03/Signup
+app.post('/level3/signup', (req, res) => {
+    const { imageGrid, dropGrid } = req.body;
 
-app.post('/api/signup3', (req, res) => {
-    const { user_id, imageGrid, dropGrid } = req.body;
-
-    if (!user_id || !imageGrid || !dropGrid) {
-        return res.status(400).json({ message: 'Missing required fields' });
-    }
-
-    const query = 'INSERT INTO image_grids (user_id, image_grid, drop_grid) VALUES (?, ?, ?)';
-    connection.query(query, [user_id, JSON.stringify(imageGrid), JSON.stringify(dropGrid)], (err, result) => {
+    connection.query('SELECT COALESCE(MAX(user_id), 0) + 1 AS nextUserId FROM level3', (err, results) => {
         if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({ message: 'Error saving to database' });
+            console.error('Error fetching next user ID:', err);
+            return res.status(500).json({ message: 'Error during signup. Please try again.' });
         }
-        res.status(200).json({ message: 'Signup successful' });
+        const nextUserId = results[0].nextUserId;
+
+        const query = 'INSERT INTO level3 (user_id, image_grid, drop_grid) VALUES (?, ?, ?)';
+        connection.query(query, [nextUserId, JSON.stringify(imageGrid), JSON.stringify(dropGrid)], (err, results) => {
+            if (err) {
+                console.error('Error inserting data:', err);
+                return res.status(500).json({ message: 'Error during signup. Please try again.' });
+            }
+            res.status(200).json({ message: 'Signup successful!' });
+        });
     });
 });
 
 // Level-03/Signin
 app.post('/level3/signin', (req, res) => {
     const { user_id } = req.body;
-    if (!user_id) {
-        return res.status(400).send('User ID is required');
-    }
-    const query = 'SELECT image_grid FROM image_grids WHERE user_id = ?';
-    connection.query(query, [user_id], (err, results) => {
-        if (err) {
-            console.error('Error fetching image grid:', err);
-            return res.status(500).send('Internal Server Error');
+    const query = 'SELECT image_grid FROM level3 WHERE user_id = ?';
+
+    connection.query(query, [user_id], (error, results) => {
+        if (error) {
+            console.error('Error fetching image grid:', error);
+            return res.status(500).json({ error: 'Database query failed' });
         }
-        if (results.length === 0) {
-            return res.status(404).send('Image grid not found');
+
+        const imageGrid = results[0].image_grid;
+
+        // Check if imageGrid is an object and send it as an array
+        if (typeof imageGrid === 'object') {
+            res.json(Object.values(imageGrid)); // Converts object to array of values
+        } else {
+            res.status(500).json({ error: 'Unexpected data format for image grid' });
         }
-        res.status(200).send(results[0].image_grid);
     });
 });
 
-// Verifying Image
-app.post('/level3/getDropGrid', (req, res) => {
-    const { user_id } = req.body;
-    if (!user_id) {
-        return res.status(400).send('User ID is required');
+// Verify drop grid
+app.post('/level3/verifyDropGrid', async (req, res) => {
+    const { user_id, drop_grid } = req.body;
+
+    if (!user_id || !drop_grid) {
+        return res.status(400).json({ message: 'User ID and Drop Grid are required' });
     }
-    const query = 'SELECT drop_grid FROM image_grids WHERE user_id = ?';
-    connection.query(query, [user_id], (err, results) => {
-        if (err) {
-            console.error('Error fetching drop grid data:', err);
-            return res.status(500).send('Internal Server Error');
+
+    try {
+        const [rows] = await connection.promise().query('SELECT drop_grid FROM level3 WHERE user_id = ?', [user_id]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'User not found' });
         }
-        if (results.length === 0) {
-            return res.status(404).send('Drop grid not found');
+
+        const storedDropGrid = rows[0].drop_grid;
+        const isMatch = JSON.stringify(drop_grid) === JSON.stringify(storedDropGrid);
+
+        if (isMatch) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
         }
-        res.status(200).json(JSON.parse(results[0].drop_grid)); // Parse the JSON string from database
-    });
+    } catch (error) {
+        console.error('Error verifying drop grid:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
+
+
 // -------------------------------------------- DISPLAYING USERNAME -------------------------------------------------------
 
 app.post('/level1/getUserName', (req, res) => {

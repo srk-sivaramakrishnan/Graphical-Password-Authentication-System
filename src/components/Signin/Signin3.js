@@ -6,9 +6,8 @@ import '../../css/Signin/Signin3.css'; // Adjust the path as needed
 const Signin3 = () => {
     const { id } = useParams();
     const [username, setUsername] = useState('');
-    const [imageGrid, setImageGrid] = useState([]);
+    const [imageGrid, setImageGrid] = useState([]); // Store image URLs
     const [dropGrid, setDropGrid] = useState(Array(9).fill(null)); // Initialize with 9 null values
-    const [storedDropGrid, setStoredDropGrid] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,13 +22,9 @@ const Signin3 = () => {
                 const userResponse = await axios.post('http://localhost:3001/level1/getUserName', { user_id: id });
                 setUsername(userResponse.data);
 
-                // Fetch image grid
+                // Fetch image grid (fetch once)
                 const imageGridResponse = await axios.post('http://localhost:3001/level3/signin', { user_id: id });
                 setImageGrid(imageGridResponse.data);
-
-                // Fetch drop grid from database
-                const dropGridResponse = await axios.post('http://localhost:3001/level3/getDropGrid', { user_id: id });
-                setStoredDropGrid(dropGridResponse.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -57,38 +52,47 @@ const Signin3 = () => {
     };
 
     const handleVerify = async () => {
-        const isMatch = JSON.stringify(dropGrid) === JSON.stringify(storedDropGrid);
-
-        if (isMatch) {
-            alert('Login Successfully');
-            navigate('/nextPage');
-        } else {
-            alert('Incorrect password, please try again.');
+        try {
+            const response = await axios.post('http://localhost:3001/level3/verifyDropGrid', { user_id: id, drop_grid: dropGrid });
+            if (response.data.success) {
+                alert('Login Successfully');
+                navigate('/nextPage');
+            } else {
+                alert('Incorrect arrangement, please try again.');
+            }
+        } catch (error) {
+            console.error('Error verifying drop grid:', error);
+            alert('An error occurred. Please try again.');
         }
+    };
+
+    const handleRefresh = () => {
+        window.location.reload();
     };
 
     return (
         <div className="signin3-container">
             <div className="left-section">
-                <div className="skyhook-text">Skyhook!</div>
+                <div className="skyhook-text">SkyHook!</div>
                 <img src="/images/Signin3.png" alt="Skyhook promotional graphic" className="vector-img" />
             </div>
             <div className="right-section">
                 <div className="header">
                     <h1>Level-03</h1>
+                    <div className="header-hello"><h2>Sign In</h2></div>
                     <h1>Hello, <span className="username">{username}</span></h1>
                 </div>
                 <div className="right-section-content">
                     <div className="image-grid-container">
-                        {imageGrid && imageGrid.map((image, index) => (
-                            <img
+                        {imageGrid.map((image, index) => (
+                            <div
                                 key={index}
-                                src={image}
-                                alt={`Draggable item ${index + 1}`}
                                 className="image-grid-item"
+                                style={{ backgroundImage: `url(${image})` }}
                                 draggable
                                 onDragStart={(e) => handleDragStart(e, image)}
-                            />
+                            >
+                            </div>
                         ))}
                     </div>
                     <div className="drop-grid-container">
@@ -104,7 +108,10 @@ const Signin3 = () => {
                         ))}
                     </div>
                 </div>
-                <button onClick={handleVerify}>Signin</button>
+                <div className="button-container">
+                    <button onClick={handleRefresh} className="refresh-button">Refresh</button>
+                    <button onClick={handleVerify}>Signin</button>
+                </div>
                 <div className="forgot-password">
                     <a href="/forgot-password">Forgotten password?</a>
                 </div>

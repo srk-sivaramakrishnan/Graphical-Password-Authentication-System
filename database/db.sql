@@ -23,7 +23,8 @@ CREATE TABLE level2 (
     FOREIGN KEY (user_id) REFERENCES level1(id) 
 );
 
-CREATE TABLE image_grids (
+
+CREATE TABLE level3 (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     image_grid JSON NOT NULL,
@@ -31,7 +32,16 @@ CREATE TABLE image_grids (
     FOREIGN KEY (user_id) REFERENCES level1(id)
 );
 
-drop table level1;
-drop table image_grids;
+
+
+
+
+truncate table level1;
+truncate table level2;
+truncate table level3;
+drop table level3;
+select * from level1;
 select * from level2;
+select * from level3;
 select * from image_grids;
+
