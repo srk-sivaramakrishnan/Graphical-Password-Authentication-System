@@ -1,1 +1,75 @@
-/* Hii */
+@import
+url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'); 
+body { 
+ font-family: 'Poppins', sans-serif; 
+ margin: 0; 
+ padding: 0; 
+} 
+.home-container { 
+ display: flex; 
+ height: 100vh; 
+} 
+.left-section { 
+ flex: 1; 
+ display: flex; 
+ flex-direction: column; 
+ justify-content: center; 
+ align-items: center; 
+ position: relative; 
+ background-color: #a020f0; /* Background color for the left side */
+ padding: 20px; 
+} 
+.skyhook-text { 
+ position: absolute; 
+ top: 20px; /* Adjust the spacing as needed */
+ left: 20px; /* Adjust the spacing as needed */
+ font-size: 32px; /* Adjust the font size as needed */
+ font-weight: 600; /* Adjust the font weight as needed */
+ color: #fff; /* Adjust the color as needed */
+} 
+.vector-img { 
+ width: 90%; /* Adjust the width as needed */
+ height: auto; 
+ margin-top: 50px; /* Adjust the spacing as needed */
+} 
+.right-section { 
+ flex: 1; 
+ display: flex; 
+ flex-direction: column; 
+ justify-content: center; 
+ align-items: center; 
+ padding: 20px; 
+ margin-top: 250px; 
+ background-color: #ffffff; /* Background color for the right side */
+} 
+.right-section h1 { 
+ margin-bottom: 20px; 
+ font-size: 24px; 
+ text-align: center; 
+ font-weight: 600; /* Adjust the font weight as needed */
+} 
+.right-section button { 
+ margin: 10px; 
+ padding: 10px 80px; 
+ font-size: 16px; 
+ border: none; 
+ border-radius: 5px; 
+ cursor: pointer; 
+ background-color: #a020f0; /* Button background color */
+ color: #fff; /* Button text color */
+ transition: background-color 0.3s; 
+ font-weight: 500; /* Adjust the font weight as needed */
+} 
+.right-section button:hover { 
+ background-color: #b24ff0; /* Button hover color */
+} 
+.footer { 
+ margin-top: auto; /* Pushes the footer to the bottom of the container */
+ padding: 10px 20px; 
+ text-align: center; 
+} 
+.footer p { 
+ margin: 0; 
+ font-size: 14px; 
+ color: #333; /* Text color for footer */
+}

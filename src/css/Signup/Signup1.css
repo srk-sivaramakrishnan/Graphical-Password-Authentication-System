@@ -1,0 +1,130 @@
+@import
+url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'); 
+body { 
+ font-family: 'Poppins', sans-serif; 
+ margin: 0; 
+ padding: 0; 
+ overflow: hidden; 
+} 
+.signup1-container { 
+ display: flex; 
+ height: 100vh; 
+} 
+.signup1-container .left-section { 
+ flex: 1; 
+ display: flex; 
+ flex-direction: column; 
+ justify-content: center; 
+ align-items: center; 
+ position: relative; 
+ background-color: #a020f0; 
+ padding: 20px; 
+} 
+.signup1-container .skyhook-text { 
+ position: absolute; 
+ top: 20px; 
+ left: 20px; 
+ font-size: 32px; 
+ font-weight: 600; 
+ color: #fff; 
+} 
+.signup1-container .vector-img { 
+ width: 80%; 
+ height: auto; 
+ margin-top: 50px; 
+} 
+.signup1-container .right-section { 
+ flex: 1; 
+ display: flex; 
+ flex-direction: column; 
+ justify-content: center; 
+ align-items: center; 
+ padding: 20px; 
+ background-color: #ffffff; 
+} 
+.signup1-container .right-section h1 { 
+ margin-bottom: 20px; 
+ font-size: 28px; 
+ text-align: center; 
+ font-weight: 600; 
+} 
+.signup1-container .right-section h2 { 
+ margin-bottom: 20px; 
+ font-size: 24px; 
+ text-align: center; 
+ font-weight: 600; 
+} 
+.signup1-container .right-section form { 
+ display: flex; 
+ flex-direction: column; 
+ width: 100%; 
+ max-width: 400px; 
+} 
+.signup1-container .right-section label { 
+ margin-bottom: 5px; 
+ font-weight: 500; 
+ display: block; 
+} 
+.signup1-container .right-section input { 
+ margin-bottom: 15px; 
+ padding: 10px; 
+ font-size: 16px; 
+ border: 1px solid #ddd; 
+ border-radius: 5px; 
+ width: 100%; 
+ padding-right: 40px; 
+} 
+.signup1-container .password-container { 
+ position: relative; 
+ width: 100%; 
+} 
+.signup1-container .password-icon { 
+ position: absolute; 
+ right: -10px; 
+ top: 60%; 
+ transform: translateY(-50%); 
+ cursor: pointer; 
+ font-size: 20px; 
+ color: #a020f0; 
+} 
+.signup1-container .right-section button { 
+ margin-left: 120px; 
+ margin-top: 20px; 
+ padding: 10px; 
+ font-size: 16px; 
+ border: none; 
+ border-radius: 5px; 
+ cursor: pointer; 
+ background-color: #a020f0; 
+ color: #fff; 
+ transition: background-color 0.3s; 
+ font-weight: 500; 
+ width: 100%; 
+ max-width: 200px; 
+} 
+.signup1-container .right-section button:hover { 
+ background-color: #b24ff0; 
+} 
+.signup1-container .signin-link { 
+ padding-left: 50px; 
+ margin-top: 20px; 
+ text-align: center; 
+} 
+.signup1-container .signin-link a { 
+ color: #a020f0; 
+ text-decoration: none; 
+} 
+.signup1-container .signin-link a:hover { 
+ text-decoration: underline; 
+} 
+.signup1-container .footer { 
+ margin-bottom: 200px; 
+ padding: 10px 20px; 
+ padding-left: 50px; 
+ text-align: center; 
+} 
+.signup1-container .footer p { 
+ margin: 0; 
+ font-size: 14px; 
+ color: #333; 
+} 
