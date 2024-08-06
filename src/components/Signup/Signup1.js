@@ -30,7 +30,7 @@ const Signup1 = () => {
             navigate(`/signup/level2/${userId}`);
         } catch (error) {
             console.error('There was an error signing up!', error);
-            alert('Error signing up, please try again');
+            alert('Already username or email exists');
         }
     };
 
