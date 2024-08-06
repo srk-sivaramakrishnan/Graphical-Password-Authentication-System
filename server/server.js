@@ -80,8 +80,34 @@ app.post('/level1/signin', (req, res) => {
     });
 });
 
-// -------------------------------------------- LEVEL - 02 -------------------------------------------------------
+// Level-01/Reset
+app.put('/reset/level1/:id', async (req, res) => {
+    const { id } = req.params;
+    const { password } = req.body;
 
+    if (!password) {
+        return res.status(400).json({ success: false, message: 'Password is required' });
+    }
+
+    connection.query(
+        'UPDATE level1 SET password = ? WHERE id = ?',
+        [password, id], // Directly using password, no hashing
+        (err, result) => {
+            if (err) {
+                console.error('Error resetting password:', err);
+                return res.status(500).json({ success: false, message: 'Server error' });
+            }
+
+            if (result.affectedRows > 0) {
+                res.status(200).json({ success: true, message: 'Password reset successfully' });
+            } else {
+                res.status(400).json({ success: false, message: 'ID not found' });
+            }
+        }
+    );
+});
+
+// -------------------------------------------- LEVEL - 02 -------------------------------------------------------
 
 // Level-02/Signup
 app.post('/level2/signup', (req, res) => {
@@ -105,7 +131,7 @@ app.post('/level2/signup', (req, res) => {
     });
 });
 
-// Server code: Make sure this is in your Express server file
+// Fetching Colors
 app.get('/level2/data/:id', (req, res) => {
     const { id } = req.params;
 
@@ -178,6 +204,29 @@ app.post('/level2/verify', (req, res) => {
             return res.status(401).send('Verification failed');
         }
         res.status(200).send('Verification successful');
+    });
+});
+
+//Reset
+app.post('/level2/reset', (req, res) => {
+    const { user_id, buttons, selectedColors } = req.body;
+    
+    if (!user_id || !Array.isArray(buttons) || buttons.length !== 6) {
+        return res.status(400).send('Invalid input data');
+    }
+
+    const query = `
+        UPDATE level2
+        SET button1 = ?, button2 = ?, button3 = ?, button4 = ?, button5 = ?, button6 = ?, selected_colors = ?
+        WHERE user_id = ?
+    `;
+    
+    connection.query(query, [...buttons, selectedColors, user_id], (err, result) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).send('Database error');
+        }
+        res.send('Reset successful');
     });
 });
 
@@ -257,7 +306,36 @@ app.post('/level3/verifyDropGrid', async (req, res) => {
     }
 });
 
+// Reset
+app.post('/level3/reset/:userId', (req, res) => {
+    const userId = req.params.userId;
+    const { imageGrid, dropGrid } = req.body;
 
+    // Validate input
+    if (!userId || !Array.isArray(imageGrid) || !Array.isArray(dropGrid)) {
+        return res.status(400).json({ message: 'Invalid input' });
+    }
+
+    // SQL query to update image and drop grid data
+    const query = `
+        UPDATE level3
+        SET image_grid = ?, drop_grid = ?
+        WHERE user_id = ?;
+    `;
+
+    connection.query(query, [JSON.stringify(imageGrid), JSON.stringify(dropGrid), userId], (err, results) => {
+        if (err) {
+            console.error('Error updating image data:', err);
+            return res.status(500).json({ message: 'Error updating image data. Please try again.' });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'Images reset successful!' });
+    });
+});
 // -------------------------------------------- DISPLAYING USERNAME -------------------------------------------------------
 
 app.post('/level1/getUserName', (req, res) => {
@@ -422,7 +500,6 @@ app.post('/verify-otp', async (req, res) => {
         return res.status(400).json({ success: false, message: 'Email and OTP are required' });
     }
 
-    // Step 1: Check OTP expiration
     connection.query(
         'SELECT otp_expiration FROM Forgot WHERE email = ? AND otp = ?',
         [email, otp],
@@ -431,7 +508,6 @@ app.post('/verify-otp', async (req, res) => {
                 console.error('Error retrieving OTP:', err);
                 return res.status(500).json({ success: false, message: 'Server error' });
             }
-
             if (result.length > 0) {
                 const otpExpiration = new Date(result[0].otp_expiration);
                 if (new Date() < otpExpiration) {
@@ -462,6 +538,7 @@ app.post('/verify-otp', async (req, res) => {
         }
     );
 });
+
 
 // -------------------------------------------- START THE SERVER -------------------------------------------------------
 app.listen(port, () => {
