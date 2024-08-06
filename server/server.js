@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
+const nodemailer = require('nodemailer');
+
 
 const app = express();
 const port = 3001;
@@ -280,6 +282,185 @@ app.post('/level1/getUserName', (req, res) => {
         }
         res.status(200).send(results[0].name); // Send just the name string
     });
+});
+
+// ------------------------------------------------ FORGOTTEN PASSWORD -----------------------------------------------
+// Generate OTP and send email
+app.post('/forgot-password', async (req, res) => {
+    const { email } = req.body;
+
+    // Check if the email exists in the level1 table
+    connection.query('SELECT email FROM level1 WHERE email = ?', [email], (err, results) => {
+        if (err) {
+            console.error('Error checking email:', err);
+            return res.status(500).json({ success: false, message: 'Server error' });
+        }
+
+        // If the email does not exist
+        if (results.length === 0) {
+            return res.status(400).json({ success: false, message: 'This email is not registered.' });
+        }
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiration = new Date(Date.now() + 15 * 60 * 1000); // 15 minutes from now
+
+        connection.query(
+            'INSERT INTO Forgot (email, otp, otp_expiration) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE otp = VALUES(otp), otp_expiration = VALUES(otp_expiration)',
+            [email, otp, expiration],
+            (err, result) => {
+                if (err) {
+                    console.error('Error updating OTP:', err);
+                    return res.status(500).json({ success: false, message: 'Server error' });
+                }
+
+                // Send OTP via email
+                const transporter = nodemailer.createTransport({
+                    service: 'Gmail',
+                    auth: {
+                        user: 'skyhookdeveloper@gmail.com',
+                        pass: 'jihl kdrk xnie zgzu'
+                    }
+                });
+
+                const mailOptions = {
+                    from: 'your-email@gmail.com',
+                    to: email,
+                    subject: 'SkyHook Password Reset',
+                    html: `
+                        <html>
+                        <head>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    background-color: #f4f4f4;
+                                    margin: 0;
+                                    padding: 0;
+                                    overflow-x: hidden;
+                                }
+                                .container {
+                                    width: 100%;
+                                    max-width: 600px;
+                                    margin: 0 auto;
+                                    background: #fff;
+                                    padding: 20px;
+                                    border-radius: 8px;
+                                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                                }
+                                .header {
+                                    background-color: #a020f0;
+                                    color: #fff;
+                                    padding: 15px;
+                                    text-align: center;
+                                    border-radius: 8px 8px 0 0;
+                                }
+                                .content {
+                                    padding: 20px;
+                                    border: 2px solid #a020f0;
+                                }
+                                .otp-code {
+                                    font-size: 24px;
+                                    font-weight: bold;
+                                    color: #a020f0;
+                                    display: block;
+                                    text-align: center;
+                                    margin: 20px 0;
+                                }
+                                .expiration-note {
+                                    font-size: 14px;
+                                    color: #555;
+                                    text-align: center;
+                                }
+                                .footer {
+                                    text-align: center;
+                                    padding: 15px;
+                                    font-size: 12px;
+                                    color: #777;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="header">
+                                    <h1>SkyHook Password Reset</h1>
+                                </div>
+                                <div class="content">
+                                    <p>We heard that you lost your SkyHook password. Sorry about that!</p>
+                                    <p>But don’t worry!</p>
+                                    <p>Continue resetting your password for SkyHook by entering the code below:</p>
+                                    <span class="otp-code">${otp}</span>
+                                    <p class="expiration-note">If you don’t use this code within 3 hours, it will expire.</p>
+                                </div>
+                                <div class="footer">
+                                    <p>You’re receiving this email because a password reset was requested for your account.</p>
+                                    <p>&copy; ${new Date().getFullYear()} SkyHook All rights reserved.</p>
+                                </div>
+                            </div>
+                        </body>
+                        </html>
+                    `
+                };
+
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        console.error('Error sending email:', error);
+                        return res.status(500).json({ success: false, message: 'Server error' });
+                    }
+                    res.status(200).json({ success: true, message: 'OTP sent' });
+                });
+            }
+        );
+    });
+});
+
+
+
+// Verify OTP and allow password reset
+app.post('/verify-otp', async (req, res) => {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+        return res.status(400).json({ success: false, message: 'Email and OTP are required' });
+    }
+
+    // Step 1: Check OTP expiration
+    connection.query(
+        'SELECT otp_expiration FROM Forgot WHERE email = ? AND otp = ?',
+        [email, otp],
+        (err, result) => {
+            if (err) {
+                console.error('Error retrieving OTP:', err);
+                return res.status(500).json({ success: false, message: 'Server error' });
+            }
+
+            if (result.length > 0) {
+                const otpExpiration = new Date(result[0].otp_expiration);
+                if (new Date() < otpExpiration) {
+                    // Step 2: Fetch user ID from the level1 table
+                    connection.query(
+                        'SELECT id FROM level1 WHERE email = ?',
+                        [email],
+                        (err, userResult) => {
+                            if (err) {
+                                console.error('Error retrieving user ID:', err);
+                                return res.status(500).json({ success: false, message: 'Server error' });
+                            }
+
+                            if (userResult.length > 0) {
+                                const userId = userResult[0].id;
+                                res.status(200).json({ success: true, message: 'OTP verified successfully', id: userId });
+                            } else {
+                                res.status(400).json({ success: false, message: 'User not found' });
+                            }
+                        }
+                    );
+                } else {
+                    res.status(400).json({ success: false, message: 'OTP has expired' });
+                }
+            } else {
+                res.status(400).json({ success: false, message: 'Invalid OTP or email' });
+            }
+        }
+    );
 });
 
 // -------------------------------------------- START THE SERVER -------------------------------------------------------
