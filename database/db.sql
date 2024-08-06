@@ -32,6 +32,12 @@ CREATE TABLE level3 (
     FOREIGN KEY (user_id) REFERENCES level1(id)
 );
 
+CREATE TABLE Forgot (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    otp VARCHAR(6),
+    otp_expiration DATETIME
+);
 
 
 
@@ -39,9 +45,13 @@ CREATE TABLE level3 (
 truncate table level1;
 truncate table level2;
 truncate table level3;
+truncate table Forgot;
+drop table level1;
+drop table level2;
 drop table level3;
+drop table Forgot;
 select * from level1;
 select * from level2;
 select * from level3;
-select * from image_grids;
+select * from Forgot;
 

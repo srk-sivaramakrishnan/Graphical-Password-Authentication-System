@@ -1,137 +1,161 @@
-.signin3-container { 
-    display: flex; 
-    height: 100vh; 
-    flex-direction: row; 
-   } 
-   .signin3-container .left-section { 
-    flex: 1; 
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    background-color: #a020f0; 
-    padding: 20px; 
-    color: #fff; 
-   } 
-   .signin3-container .skyhook-text { 
-    font-size: 32px; 
-    font-weight: 600; 
-    margin-bottom: 20px; 
-   } 
-   .signin3-container .vector-img { 
-    width: 80%; 
-    height: auto; 
-   } 
-   .signin3-container .right-section { 
-    flex: 1; 
-    display: flex; 
-    flex-direction: column; 
-    padding: 20px; 
-    background-color: #ffffff; 
-    margin-bottom: 150px; 
-   } 
-   .signin3-container .header { 
-    text-align: center; 
-    margin-bottom: 50px; 
-   } 
-   .signin3-container .header h1 { 
-    font-size: 25px; 
-    margin: 0; 
-   } 
-   .signin3-container .header-hello { 
-    text-align: center; 
-    font-size: 18px; 
-    color: #333; 
-    margin-bottom: 10px; 
-   } 
-   .signin3-container .username { 
-    color: #a020f0; 
-   } 
-   .signin3-container .right-section-content { 
-    display: flex; 
-    gap: 70px; 
-   } 
-   .signin3-container .image-grid-container { 
-    display: grid; 
-    grid-template-columns: repeat(3, 100px); 
-    gap: 5px; 
-    width: 300px; 
-   } 
-   .signin3-container .image-grid-item { 
-    width: 100px; 
-    height: 100px; 
-    border-radius: 5px; 
-    cursor: grab; 
-    overflow: hidden; 
-    background-size: 100% 100%; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-   } 
-   .signin3-container .drop-grid-container { 
-    display: grid; 
-    grid-template-columns: repeat(3, 100px); 
-    gap: 5px; 
-    width: 300px; 
-    border: 1px solid #ddd; 
-   } 
-   .signin3-container .drop-grid-item { 
-    width: 100px; 
-    height: 100px; 
-    border-radius: 5px; 
-    background-color: #f9f9f9; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    border: 1px solid #ddd; 
-    overflow: hidden; 
-    position: relative; 
-   } 
-   .signin3-container .drop-grid-item img { 
-    width: 100px; 
-    height: 100px; 
-   } 
-   .signin3-container button { 
-    padding: 12px 24px; 
-    font-size: 16px; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    background-color: #a020f0; 
-    color: #fff; 
-    transition: background-color 0.3s; 
-    font-weight: 500; 
-   } 
-   .signin3-container button:hover { 
-    background-color: #b24ff0; 
-   } 
-   .signin3-container .button-container { 
-    display: flex; 
-    gap: 10px; 
-    margin-bottom: 20px; 
-   } 
-   .signin3-container .refresh-button { 
-    background-color: #a020f0; 
-   } 
-   .signin3-container .refresh-button:hover { 
-    background-color: #b24ff0; 
-   } 
-   .signin3-container .forgot-password { 
-    text-align: center; 
-    margin-top: 30px; 
-   } 
-   .signin3-container .forgot-password a { 
-    color: #a020f0; 
-    font-size: 14px; 
-    text-decoration: none; 
-   } 
-   .signin3-container .forgot-password a:hover { 
-    text-decoration: underline; 
-   } 
-   .signin3-container .footer { 
-    margin-bottom: 80px; 
-    text-align: center; 
-   } 
-   .signin3-container .footer p { 
-    margin-top: 50px; 
-    font-size: 14px; 
-    color: #333; 
-   } 
+.signin3-container {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+}
+
+.signin3-container .left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #a020f0;
+    padding: 20px;
+    color: #fff;
+}
+
+.signin3-container .skyhook-text {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.signin3-container .vector-img {
+    width: 80%;
+    height: auto;
+}
+
+.signin3-container .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 150px;
+}
+
+.signin3-container .header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.signin3-container .header h1 {
+    font-size: 25px;
+    margin: 0;
+}
+
+.signin3-container .header-hello {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.signin3-container .username {
+    color: #a020f0;
+}
+
+.signin3-container .right-section-content {
+    display: flex;
+    gap: 70px;
+}
+
+.signin3-container .image-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    width: 300px;
+}
+
+.signin3-container .image-grid-item {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    cursor: grab;
+    overflow: hidden;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.signin3-container .drop-grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 5px;
+    width: 300px;
+    border: 1px solid #ddd;
+}
+
+.signin3-container .drop-grid-item {
+    width: 100px;
+    height: 100px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    position: relative;
+}
+
+.signin3-container .drop-grid-item img {
+    width: 100px;
+    height: 100px;
+}
+
+.signin3-container button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #a020f0;
+    color: #fff;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+.signin3-container button:hover {
+    background-color: #b24ff0;
+}
+
+.signin3-container .button-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.signin3-container .refresh-button {
+    background-color: #a020f0;
+}
+
+.signin3-container .refresh-button:hover {
+    background-color: #b24ff0;
+}
+
+.signin3-container .forgot-password {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.signin3-container .forgot-password a {
+    color: #a020f0;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.signin3-container .forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.signin3-container .footer {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.signin3-container .footer p {
+    margin-top: 50px;
+    font-size: 14px;
+    color: #333;
+}

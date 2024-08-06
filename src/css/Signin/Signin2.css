@@ -1,150 +1,173 @@
-@import
-url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'); 
-body { 
- font-family: 'Poppins', sans-serif; 
- margin: 0; 
- padding: 0; 
- overflow: hidden; 
-} 
-.signin2-container { 
- display: flex; 
- height: 100vh; 
-} 
-.signin2-container .left-section { 
- flex: 1; 
- display: flex; 
- flex-direction: column; 
- justify-content: center; 
- align-items: center; 
- position: relative; 
- background-color: #a020f0; 
- padding: 20px; 
-} 
-.signin2-container .skyhook-text { 
- position: absolute; 
- top: 20px; 
- left: 20px; 
- font-size: 32px; 
- font-weight: 600; 
- color: #fff; 
-} 
-.signin2-container .vector-img { 
- width: 80%; 
- height: auto; 
- margin-top: 50px; 
-} 
-.signin2-container .right-section { 
- flex: 1; 
- display: flex; 
- flex-direction: column; 
- justify-content: center; 
- align-items: center; 
- padding: 20px; 
- background-color: #ffffff; 
- margin-bottom: 80px; 
-} 
-.signin2-container .right-section h1 { 
- margin-bottom: 10px; 
- font-size: 32px; 
- text-align: center; 
- font-weight: 600; 
-} 
-.signin2-container .username { 
- color: #a020f0; 
-} 
-.signin2-container .level-heading { 
- margin-bottom: 20px; 
- font-size: 24px; 
- text-align: center; 
- font-weight: 500;
-} 
-.signin2-container .buttons-container { 
- display: flex; 
- flex-wrap: wrap; 
- gap: 20px; 
- margin-bottom: 20px; 
- margin-left: 10px; 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 
-} 
-.signin2-container .buttons-container button { 
- border: none; 
- border-radius: 50%; 
- padding: 20px; 
- cursor: pointer; 
- color: #fff; 
- display: flex; 
- align-items: center; 
- justify-content: center; 
- background-color: #a020f0; 
- width: 70px; 
- height: 70px; 
- line-height: 1; 
-} 
-.signin2-container .buttons-container button:hover { 
- background-color: #b24ff0;
-} 
-.signin2-container .input-container { 
- margin-bottom: 10px; 
- width: 100%; 
- margin-left: 350px; 
-} 
-.signin2-container .input-container label { 
- display: block; 
- font-weight: 500; 
-} 
-.signin2-container .input-with-icon { 
- display: flex; 
- align-items: center; 
- position: relative; 
- width: 50%; 
-} 
-.signin2-container .input-with-icon input { 
- margin-top: 5px; 
- padding: 12px; 
- font-size: 16px; 
- border: 1px solid #ddd; 
- border-radius: 5px; 
- width: calc(100% - 40px); 
-} 
-.signin2-container .eye-icon { 
- position: absolute; 
- top: 30%; 
- right: 30px; 
- cursor: pointer; 
- font-size: 18px; 
- color: #a020f0; 
-} 
-.signin2-container .button-actions { 
- display: flex; 
- flex-direction: column; 
- align-items: center; 
- margin-bottom: 20px; 
-} 
-.signin2-container .button-actions button { 
- padding: 10px 20px; 
- font-size: 16px; 
- border: none; 
- border-radius: 5px; 
- color: #fff; 
- background-color: #a020f0; 
- cursor: pointer; 
-} 
-.signin2-container .button-actions button:disabled { 
- background-color: #ddd; 
- cursor: not-allowed; 
-} 
-.signin2-container .forgot-password { 
- margin-top: 10px; 
-} 
-.signin2-container .forgot-password a { 
- color: #a020f0; 
- text-decoration: none; 
-} 
-.signin2-container .forgot-password a:hover { 
- text-decoration: underline; 
-} 
-.signin2-container .footer { 
- margin-top: 120px; 
- font-size: 14px; 
- color: #888; 
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.signin2-container {
+    display: flex;
+    height: 100vh;
+}
+
+.signin2-container .left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #a020f0;
+    padding: 20px;
+}
+
+.signin2-container .skyhook-text {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.signin2-container .vector-img {
+    width: 80%;
+    height: auto;
+    margin-top: 50px;
+}
+
+.signin2-container .right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 80px;
+}
+
+.signin2-container .right-section h1 {
+    margin-bottom: 10px;
+    font-size: 32px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.signin2-container .username {
+    color: #a020f0;
+}
+
+.signin2-container .level-heading {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.signin2-container .buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+
+}
+
+.signin2-container .buttons-container button {
+    border: none;
+    border-radius: 50%;
+    padding: 20px;
+    cursor: pointer;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #a020f0;
+    width: 70px;
+    height: 70px;
+    line-height: 1;
+}
+
+.signin2-container .buttons-container button:hover {
+    background-color: #b24ff0;
+}
+
+.signin2-container .input-container {
+    margin-bottom: 10px;
+    width: 100%;
+    margin-left: 350px;
+}
+
+.signin2-container .input-container label {
+    display: block;
+    font-weight: 500;
+}
+
+.signin2-container .input-with-icon {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 50%;
+}
+
+.signin2-container .input-with-icon input {
+    margin-top: 5px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100% - 40px);
+}
+
+.signin2-container .eye-icon {
+    position: absolute;
+    top: 30%;
+    right: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #a020f0;
+}
+
+.signin2-container .button-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.signin2-container .button-actions button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #a020f0;
+    cursor: pointer;
+}
+
+.signin2-container .button-actions button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+.signin2-container .forgot-password {
+    margin-top: 10px;
+}
+
+.signin2-container .forgot-password a {
+    color: #a020f0;
+    text-decoration: none;
+}
+
+.signin2-container .forgot-password a:hover {
+    text-decoration: underline;
+}
+
+.signin2-container .footer {
+    margin-top: 120px;
+    font-size: 14px;
+    color: #888;
 }

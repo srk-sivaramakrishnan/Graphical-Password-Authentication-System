@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -7,12 +6,12 @@ body {
     overflow: hidden;
 }
 
-.signin1-container {
+.reset1-container {
     display: flex;
     height: 100vh;
 }
 
-.signin1-container .left-section {
+.reset1-container .left-section {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -23,7 +22,7 @@ body {
     padding: 20px;
 }
 
-.signin1-container .skyhook-text {
+.reset1-container .skyhook-text {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -32,13 +31,13 @@ body {
     color: #fff;
 }
 
-.signin1-container .vector-img {
+.reset1-container .vector-img {
     width: 80%;
     height: auto;
     margin-top: 50px;
 }
 
-.signin1-container .right-section {
+.reset1-container .right-section {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -47,37 +46,42 @@ body {
     padding: 20px;
     background-color: #ffffff;
     margin-top: 200px;
-
 }
 
-.signin1-container .right-section h1 {
+.reset1-container .right-section h1 {
     margin-bottom: 10px;
     font-size: 32px;
     text-align: center;
     font-weight: 600;
 }
 
-.signin1-container .right-section h2 {
+.reset1-container .right-section h2 {
     margin-bottom: 20px;
     font-size: 24px;
     text-align: center;
     font-weight: 600;
 }
 
-.signin1-container .right-section form {
+.reset1-container .username {
+    color: #a020f0; /* Username color */
+}
+
+.reset1-container .right-section form {
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-top: 50px;
     max-width: 400px;
+    margin-right: 50px;
 }
 
-.signin1-container .right-section label {
+.reset1-container .right-section label {
     margin-bottom: 5px;
     font-weight: 500;
     display: block;
 }
 
-.signin1-container .right-section input {
+.reset1-container .right-section input {
     margin-bottom: 15px;
     padding: 10px;
     font-size: 16px;
@@ -85,10 +89,26 @@ body {
     border-radius: 5px;
     width: 100%;
     padding-right: 40px;
+    position: relative;
 }
 
-.signin1-container .right-section button.signin1-button {
-    margin-left: 120px;
+.reset1-container .password-container {
+    position: relative;
+    width: 100%;
+}
+
+.reset1-container .password-icon {
+    position: absolute;
+    right: 10px;
+    top: 40%;
+    right: -20px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #a020f0;
+}
+
+.reset1-container .reset1-button {
     padding: 10px;
     font-size: 16px;
     border: none;
@@ -98,52 +118,25 @@ body {
     color: #fff;
     transition: background-color 0.3s;
     font-weight: 500;
-    width: 200px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+    margin-left: 130px;
 }
 
-.signin1-container .right-section button.signin1-button:hover {
+.reset1-container .reset1-button:hover {
     background-color: #b24ff0;
 }
 
-.signin1-container .forgot-password1 {
-    margin-top: 30px;
-    margin-left: 50px;
-}
-
-.signin1-container .forgot-password1 a {
-    color: #a020f0;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.signin1-container .forgot-password1 a:hover {
-    text-decoration: underline;
-}
-
-.signin1-container .footer {
-    margin-top: auto;
+.reset1-container .footer {
+    margin-top: 150px;
     padding: 10px 20px;
     text-align: center;
-}
-
-.signin1-container .footer p {
-    margin: 0;
-    font-size: 14px;
-    color: #333;
-}
-
-.signin1-container .password-container {
-    position: relative;
     width: 100%;
 }
 
-.signin1-container .password-icon {
-    position: absolute;
-    left: 100%;
-    top: 60%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 15px;
-    color: #a020f0;
+.reset1-container .footer p {
+    margin-bottom: 100px;
+    font-size: 14px;
+    color: #333;
 }

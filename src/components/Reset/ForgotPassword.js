@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import '../../css/Update/ForgotPassword.css'; // Adjust the path as needed
+import { useNavigate } from 'react-router-dom';
+import '../../css/Reset/ForgotPassword.css';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -10,9 +10,9 @@ const ForgotPassword = () => {
     const [showOtpInput, setShowOtpInput] = useState(false);
     const [loading, setLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false);
-    const [otpResent, setOtpResent] = useState(false); // New state for OTP resent
+    const [otpResent, setOtpResent] = useState(false);
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     const handleSendOtp = async () => {
         setLoading(true);
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
             if (response.data.success) {
                 setShowOtpInput(true);
                 setOtpSent(true);
-                setOtpResent(false); // Reset OTP resent state
+                setOtpResent(false);
                 setMessage('OTP has been sent to your email.');
             } else {
                 setMessage('Error sending OTP.');
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
             const response = await axios.post('http://localhost:3001/verify-otp', { email, otp });
             if (response.data.success) {
                 setMessage('OTP verified successfully. You can now reset your password.');
-                navigate(`/update/level1/${response.data.id}`); // Navigate to the new route
+                navigate(`/reset/level1/${response.data.id}`);
             } else {
                 setMessage('Invalid or expired OTP.');
             }
@@ -58,7 +58,7 @@ const ForgotPassword = () => {
             const response = await axios.post('http://localhost:3001/forgot-password', { email });
             if (response.data.success) {
                 setOtpResent(true);
-                setMessage('OTP has been resent to your email.');
+                setMessage('Check your mail the OTP has been sent.');
             } else {
                 setMessage('Error resending OTP.');
             }
@@ -78,38 +78,45 @@ const ForgotPassword = () => {
             </div>
             <div className="right-section">
                 <h2>Forgot Password?</h2>
-                <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    disabled={loading}
-                />
-                {!otpSent && (
-                    <button onClick={handleSendOtp} disabled={loading}>
-                        {loading ? 'Sending...' : 'Send OTP'}
-                    </button>
-                )}
-                {showOtpInput && (
-                    <>
-                        <input
-                            type="text"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            placeholder="Enter OTP"
-                            disabled={loading}
-                        />
-                        <button onClick={handleVerifyOtp} disabled={loading}>
-                            {loading ? 'Verifying...' : 'Verify OTP'}
+                <form>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={loading}
+                    />
+                    {!otpSent && (
+                        <button onClick={handleSendOtp} disabled={loading}>
+                            {loading ? 'Sending...' : 'Send OTP'}
                         </button>
-                    </>
-                )}
+                    )}
+                    {showOtpInput && (
+                        <>
+                            <label htmlFor="otp">OTP</label>
+                            <input
+                                type="text"
+                                id="otp"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                disabled={loading}
+                            />
+                            <button onClick={handleVerifyOtp} disabled={loading}>
+                                {loading ? 'Verifying...' : 'Verify OTP'}
+                            </button>
+                        </>
+                    )}
+                </form>
                 {message && <p className="message">{message}</p>}
                 {otpSent && !otpResent && (
                     <p className="resend-link" onClick={handleResendOtp}>
                         Resend OTP
                     </p>
                 )}
+                <footer className="footer">
+                    <p>&copy; 2024 SkyHook. All rights reserved.</p>
+                </footer>
             </div>
         </div>
     );
